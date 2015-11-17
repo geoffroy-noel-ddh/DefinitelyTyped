@@ -503,6 +503,10 @@ declare module olx {
     }
 
     module interaction {
+        interface DrawGeometryFunctionType {
+            (coordinates: ol.Coordinate|Array<ol.Coordinate>|Array<Array<ol.Coordinate>>, geometry: ol.geom.SimpleGeometry): ol.geom.SimpleGeometry;
+        }
+        
         interface DefaultsOptions {
             altShiftDragRotate?: boolean;
             doubleClickZoom?: boolean;
@@ -515,6 +519,23 @@ declare module olx {
             zoomDelta?: number;
             zoomDuration?: number;
           }
+          
+        interface DrawOptions {
+            clickTolerance?: number;
+            features?: ol.Collection<ol.Feature>;
+            source?: ol.source.Vector;
+            snapTolerance?: number;
+            type?: ol.geom.GeometryType;
+            maxPoints?: number;
+            minPoints?: number;
+            style?: ol.style.Style | Array<ol.style.Style> | ol.style.StyleFunction;
+            geometryFunction?: olx.interaction.DrawGeometryFunctionType;
+            geometryName?: string;
+            condition?: ol.events.ConditionType;
+            freehandCondition?: ol.events.ConditionType;
+            wrapX?: boolean;
+          }
+          
     }
 
     module layer {
@@ -1155,7 +1176,7 @@ declare module ol {
          */
         coordinate: ol.Coordinate;
     }
-
+    
     /**
      * A vector object for geographic features with a geometry and other attribute properties, similar to the features in vector file formats like GeoJSON.
      */
@@ -2415,6 +2436,14 @@ declare module ol {
     }
 
     module events {
+        /**
+         * A function that takes an {@link ol.MapBrowserEvent} and returns a
+         * `{boolean}`. If the condition is met, true should be returned.
+         */
+        interface ConditionType { 
+            (event: ol.MapBrowserEvent): boolean; 
+        }
+
         module condition {
         }
     }
@@ -3425,6 +3454,7 @@ declare module ol {
         }
 
         class Draw {
+            constructor(options?: olx.interaction.DrawOptions);
         }
 
         class DrawEvent {
