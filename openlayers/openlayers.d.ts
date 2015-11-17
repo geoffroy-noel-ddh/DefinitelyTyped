@@ -740,17 +740,34 @@ declare module olx {
         }
 
         interface TextOptions {
-          font?: string;
-          offsetX?: number;
-          offsetY?: number;
-          scale?: number;
-          rotation?: number;
-          text?: string;
-          textAlign?: string;
-          textBaseline?: string;
-          fill?: ol.style.Fill;
-          stroke?: ol.style.Stroke;
+            font?: string;
+            offsetX?: number;
+            offsetY?: number;
+            scale?: number;
+            rotation?: number;
+            text?: string;
+            textAlign?: string;
+            textBaseline?: string;
+            fill?: ol.style.Fill;
+            stroke?: ol.style.Stroke;
         }
+
+        interface StrokeOptions {
+            color?: ol.Color | string;
+            lineCap?: string;
+            lineJoin?: string;
+            lineDash?: Array<number>;
+            miterLimit?: number;
+            width?: number;
+        }
+
+        interface CircleOptions {
+            fill?: ol.style.Fill;
+            radius?: number;
+            snapToPixel?: boolean;
+            stroke?: ol.style.Stroke;
+        }
+
     }
 
     module tilegrid {
@@ -2747,7 +2764,7 @@ declare module ol {
             /**
             * Test if the geometry and the passed extent intersect.
             * @param extent Extent
-            * @returns true if the geometry and the extent intersect. 
+            * @returns true if the geometry and the extent intersect.
             */
             intersectsExtent(extent: ol.Extent): boolean;
 
@@ -2830,7 +2847,7 @@ declare module ol {
             /**
              * Test if the geometry and the passed extent intersect.
              * @param extent Extent
-             * @returns true if the geometry and the extent intersect. 
+             * @returns true if the geometry and the extent intersect.
              */
             intersectsExtent(extent: ol.Extent): boolean;
 
@@ -2948,7 +2965,7 @@ declare module ol {
             /**
              * Test if the geometry and the passed extent intersect.
              * @param extent Extent
-             * @returns true if the geometry and the extent intersect. 
+             * @returns true if the geometry and the extent intersect.
              */
             intersectsExtent(extent: ol.Extent): boolean;
 
@@ -3035,7 +3052,7 @@ declare module ol {
             /**
              * Test if the geometry and the passed extent intersect.
              * @param extent Extent
-             * @returns true if the geometry and the extent intersect. 
+             * @returns true if the geometry and the extent intersect.
              */
             intersectsExtent(extent: ol.Extent): boolean;
 
@@ -3099,7 +3116,7 @@ declare module ol {
             /**
              * Test if the geometry and the passed extent intersect.
              * @param extent Extent
-             * @returns true if the geometry and the extent intersect. 
+             * @returns true if the geometry and the extent intersect.
              */
             intersectsExtent(extent: ol.Extent): boolean;
 
@@ -3183,7 +3200,7 @@ declare module ol {
             /**
              * Test if the geometry and the passed extent intersect.
              * @param extent Extent
-             * @returns true if the geometry and the extent intersect. 
+             * @returns true if the geometry and the extent intersect.
              */
             intersectsExtent(extent: ol.Extent): boolean;
 
@@ -3228,7 +3245,7 @@ declare module ol {
             /**
              * Test if the geometry and the passed extent intersect.
              * @param extent Extent
-             * @returns true if the geometry and the extent intersect. 
+             * @returns true if the geometry and the extent intersect.
              */
             intersectsExtent(extent: ol.Extent): boolean;
 
@@ -3326,7 +3343,7 @@ declare module ol {
             /**
              * Test if the geometry and the passed extent intersect.
              * @param extent Extent
-             * @returns true if the geometry and the extent intersect. 
+             * @returns true if the geometry and the extent intersect.
              */
             intersectsExtent(extent: ol.Extent): boolean;
 
@@ -3368,8 +3385,8 @@ declare module ol {
              */
             getLayout(): ol.geom.GeometryLayout;
 
-            /** 
-            * Translate the geometry. This modifies the geometry coordinates in place. 
+            /**
+            * Translate the geometry. This modifies the geometry coordinates in place.
             * If instead you want a new geometry, first clone() this geometry.
             * @param deltaX Delta X
             * @param deltaY Delta Y
@@ -4015,6 +4032,7 @@ declare module ol {
         }
 
         class Circle {
+            constructor(opt_options?: olx.style.CircleOptions);
         }
 
         /**
@@ -4048,7 +4066,7 @@ declare module ol {
         }
 
         class Stroke {
-            constructor();
+            constructor(opt_options?: olx.style.StrokeOptions);
         }
 
         /**
