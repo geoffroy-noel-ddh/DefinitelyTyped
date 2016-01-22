@@ -509,7 +509,7 @@ declare module olx {
         
         interface SelectFilterFunction {
             (feature: ol.Feature, layer: ol.layer.Layer): boolean
-        }        
+        }
 
         interface DefaultsOptions {
             altShiftDragRotate?: boolean;
@@ -538,6 +538,10 @@ declare module olx {
             condition?: ol.events.ConditionType;
             freehandCondition?: ol.events.ConditionType;
             wrapX?: boolean;
+        }
+        
+        interface InteractionOptions {
+            handleEvent: any;
         }
           
         interface SelectOptions {
@@ -2456,12 +2460,12 @@ declare module ol {
          * A function that takes an {@link ol.MapBrowserEvent} and returns a
          * `{boolean}`. If the condition is met, true should be returned.
          */
-        interface ConditionType { 
-            (event: ol.MapBrowserEvent): boolean; 
+        interface ConditionType {
+            (event: ol.MapBrowserEvent): boolean;
         }
 
         module condition {
-            function click(event: ol.MapBrowserEvent): boolean; 
+            function click(event: ol.MapBrowserEvent): boolean;
         }
     }
 
@@ -3472,12 +3476,27 @@ declare module ol {
 
         class Draw extends Pointer {
             constructor(options?: olx.interaction.DrawOptions);
+            
+            /**
+            * Stop drawing and add the sketch feature to the target layer.
+            * The {@link ol.interaction.DrawEventType.DRAWEND} event is dispatched before
+            * inserting the feature.
+            * @api
+            */
+            finishDrawing(): void;
         }
 
         class DrawEvent {
         }
 
         class Interaction extends Object {
+            constructor(options?: olx.interaction.InteractionOptions);
+            
+            /**
+             * Activate or deactivate the interaction.
+             * @param active
+             */
+            setActive(active: boolean): void;
         }
 
         class KeyboardPan {
@@ -3503,6 +3522,11 @@ declare module ol {
 
         class Select extends Interaction {
             constructor(options?: olx.interaction.SelectOptions);
+            
+            /**
+             * Get the selected features
+             */
+            getFeatures(): ol.Collection<ol.Feature>;
         }
 
         class Snap {
@@ -4042,14 +4066,24 @@ declare module ol {
         }
 
         class Vector {
-          constructor(opts: olx.source.VectorOptions)
+            constructor(opts: olx.source.VectorOptions)
+            
+            /**
+            * Get the extent of the features currently in the source.
+            */
+            getExtent(): ol.Extent;
+            
+            getFeaturesInExtent(extent: ol.Extent): ol.Feature[];
 
-          /**
-           * Get the extent of the features currently in the source.
-           */
-          getExtent(): ol.Extent;
-
-          getFeaturesInExtent(extent: ol.Extent): ol.Feature[];
+            /**
+            * Remove a single feature from the source.  If you want to remove all features
+            * at once, use the {@link ol.source.Vector#clear source.clear()} method
+            * instead.
+            * @param {ol.Feature} feature Feature to remove.
+            */
+            removeFeature(feature: ol.Feature): void;
+            
+            addFeatures(features: Array<ol.Feature>): void;
         }
 
         class VectorEvent {
